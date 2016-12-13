@@ -2,6 +2,7 @@ $secondary-color: #125688;
 $platzigram-red: #fff;
 
 @import "node_modules/materialize-css/sass/materialize.scss";
+@import "./loader";
 
 body {
   background: #fafafa;
