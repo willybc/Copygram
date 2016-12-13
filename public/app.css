@@ -6569,7 +6569,7 @@ body {
     filter: alpha(opacity=0); }
 
 .fa-heart {
-  color: #fff;
+  color: #f44336;
   display: none; }
 
 .user-page {
@@ -6600,9 +6600,26 @@ body {
       display: none;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      color: #f44336;
       font-size: 34px;
       display: none; }
     .user-page .picture-container .fa-heart {
       margin-right: 8px;
       display: inline-block; }
+
+.modal img {
+  max-width: 90%;
+  max-height: 90%; }
+
+.modal .fa-heart {
+  display: inline-blick; }
+
+.btn.btn-flat, .btn-flat.btn-large {
+  background-color: transparent;
+  box-shadow: none; }
+
+.loader-container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
