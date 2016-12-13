@@ -27,14 +27,18 @@
     "yo-yo": "^1.3.1"
   },
   "devDependencies": {
+    "babel-core": "^6.20.0",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-regenerator": "^6.20.0",
+    "babel-polyfill": "^6.20.0",
     "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.1",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
+    "loaders.css": "^0.1.2",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   },

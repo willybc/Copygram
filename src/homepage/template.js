@@ -6,6 +6,7 @@ var request = require('superagent');
 
 module.exports = function (pictures) {
   var el = yo`<div class="container timeline">
+
     <div class="row">
       <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
         <form enctype="multipart/form-data" class="form-upload" id="formUpload" onsubmit=${onsubmit}>

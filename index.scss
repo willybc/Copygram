@@ -1,4 +1,5 @@
 $secondary-color: #125688;
+$platzigram-red: #fff;
 
 @import "node_modules/materialize-css/sass/materialize.scss";
 
@@ -71,7 +72,7 @@ body {
 }
 
 $avatar-size: 48px;
-
+$avatar-size-big: 150px;
 .avatar {
   width: $avatar-size;
   height: $avatar-size;
@@ -143,4 +144,68 @@ $avatar-size: 48px;
     }
   }
 
+}
+
+.fa-heart { 
+    color: $platzigram-red;
+    display: none;
+    }
+
+  .user-page 
+  {
+   margin-top: 30px;
+ 
+   .heading {
+     margin-bottom: 20px;
+            }
+ 
+   .picture-container 
+   {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     height: 400px;
+     margin-bottom: 20px;
+     position: relative;
+
+     &:hover 
+     {
+      
+      
+
+        .likes {
+           display: flex;
+               }
+      }
+  
+     .picture 
+     {
+       margin-bottom: 20px;
+       display: block;
+       max-width: 100%;
+       max-height: 100%;
+     }
+
+ .likes {
+       position: absolute;
+       top: 0;
+       bottom: 0;
+       left: 0;
+       right: 0;
+       text-align: center;
+       display: none;
+       justify-content: center;
+       align-items: center;
+       color: $platzigram-red;
+       font-size: 34px;
+       display: none
+     }
+ 
+     .fa-heart 
+     {
+       margin-right: 8px;
+       display: inline-block;
+     }
+   
+ }
 }

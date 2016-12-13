@@ -6,7 +6,7 @@ var request = require('superagent');
 var header = require('../header');
 var axios = require('axios');
 
-page('/', header, loadPicturesFetch, function (ctx, next) {
+page('/', header, asyncLoad, function (ctx, next) {
   title('Platzigram');
   var main = document.getElementById('main-container');
 
@@ -15,8 +15,19 @@ page('/', header, loadPicturesFetch, function (ctx, next) {
 
 /* Promesas - Obteniendo respuestas del servidor con  */
 
+async function asyncLoad(ctx, next) {
+  try { 
+    ctx.pictures = await fetch('/api/pictures').then(res => res.json()); 
+    next(); 
+  } catch (err) {
+    return console.log(err);
+    }
+  }
+
+
+
 /* SuperAgent */
-function loadPictures(ctx, next) {
+/*function loadPictures(ctx, next) {
   request
     .get('/api/pictures')
     .end(function (err, res) {
@@ -27,7 +38,7 @@ function loadPictures(ctx, next) {
     })
 }
 /* Axios */
-function loadPicturesAxios(ctx, next) {
+/*function loadPicturesAxios(ctx, next) {
   axios
     .get('/api/pictures')
     .then(function (res) {
@@ -40,7 +51,7 @@ function loadPicturesAxios(ctx, next) {
     })
 }
 /* Fetch API */
-  function loadPicturesFetch(ctx, next) {
+/*  function loadPicturesFetch(ctx, next) {
     fetch('/api/pictures')
     .then(function (res) {
       return res.json();
@@ -56,14 +67,3 @@ function loadPicturesAxios(ctx, next) {
 
   /* Async / Await */
 
-/*async function asyncLoad(ctx, next) {
-  try { 
-    ctx.pictures = await fetch('/api/pictures').then(res => res.json()); 
-    next(); 
-  } catch (err) {
-    return console.log(err);
-    }
-  }
-
-  |N| |O|  |W| |O| |R| |K|
-  */
