@@ -6623,3 +6623,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center; }
+
+.like-heart {
+  font-size: 10em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  transition: all .1s ease;
+  opacity: 0; }
+  .like-heart.liked {
+    color: #f44336;
+    font-size: 12em;
+    display: block;
+    transition: all .5s ease;
+    opacity: 1; }
