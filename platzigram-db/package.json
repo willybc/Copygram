@@ -1,0 +1,26 @@
+{
+  "name": "platzigram-db",
+  "version": "1.0.0",
+  "description": "Wilb Database Client",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willybc/Platzigram.git"
+  },
+  "author": "Willy Bardales",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/willybc/Platzigram/issues"
+  },
+  "homepage": "https://github.com/willybc/Platzigram#readme",
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "standard": "^8.6.0"
+  }
+}
