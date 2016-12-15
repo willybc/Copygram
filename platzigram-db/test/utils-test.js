@@ -2,16 +2,46 @@
 
 const test = require('ava')
 
-test('this should pass', t => {
-  t.pass()
-})
+const utils = require('../lib/utils')
 
-test('this should fail', t => {
-  t.fail()
-})
+test('extracting hashtags from text', t => {
+  let tags = utils.extractTags('a #picture with tags #AweSome #plazi #AVA and #100 ##yes')
 
-test('it should support async/await', async t => {
-  let p = Promise.resolve(42)
-  let secret = await p
-  t.is(secret, 42)
+  t.deepEqual([
+    'picture',
+
+    'awesome',
+
+    'platzi',
+
+    'ava',
+
+    '100',
+
+    'yes'
+
+  ], [
+
+    'picture',
+
+    'awesome',
+
+    'platzi',
+
+    'ava',
+
+    '100',
+
+    'yes'
+
+  ])
+
+  tags = utils.extractTags('a picture whit no tags')
+  t.deepEqual(tags, [])
+
+  tags = utils.extractTags()
+  t.deepEqual(tags, [])
+
+  tags = utils.extractTags(null)
+  t.deepEqual(tags, [])
 })
