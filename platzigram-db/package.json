@@ -4,7 +4,8 @@
   "description": "Wilb Database Client",
   "main": "index.js",
   "scripts": {
-    "lint": "standard"
+    "lint": "standard",
+    "test": "npm run lint && ava"
   },
   "standard": {
     "parser": "babel-eslint"
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/willybc/Platzigram#readme",
   "devDependencies": {
+    "ava": "^0.17.0",
     "babel-eslint": "^7.1.1",
     "standard": "^8.6.0"
   }
