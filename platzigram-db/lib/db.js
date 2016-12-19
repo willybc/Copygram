@@ -3,6 +3,8 @@
 const co = require('co')
 const r = require('rethinkdb')
 const Promise = require('bluebird')
+const uuid = require('uuid-base62')
+const utils = require('./utils')
 
 const defaults = {
   host: 'localhost',
@@ -71,6 +73,7 @@ class Db {
     let tasks = co.wrap(function * () {
       let conn = yield connection
       image.createdAt = new Date()
+      image.tags = utils.extractTags(image.description)
 
       let result = yield r.db(db).table('images').insert(image).run(conn)
 
@@ -80,7 +83,13 @@ class Db {
 
       image.id = result.generated_keys[0]
 
-      return Promise.resolve(image)
+      yield r.db(db).table('images').get(image.id).update({
+        public_id: uuid.encode(image.id)
+      }).run(conn)
+
+      let created = yield r.db(db).table('images').get(image.id).run(conn)
+
+      return Promise.resolve(created)
     })
 
     return Promise.resolve(tasks()).asCallback(callback)
