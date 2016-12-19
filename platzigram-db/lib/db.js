@@ -94,6 +94,30 @@ class Db {
 
     return Promise.resolve(tasks()).asCallback(callback)
   }
+
+  likeImage (id, callback) {
+    if (!this.connect) {
+      return Promise.reject(new Error('not connected')).Callback(callback)
+    }
+
+    let connection = this.connection
+    let db = this.db
+    let imageId = uuid.decode(id)
+
+    let tasks = co.wrap(function * () {
+      let conn = yield connection
+      let image = yield r.db(db).table('images').get(imageId).run(conn)
+      yield r.db(db).table('images').get(imageId).update({
+        liked: true,
+        likes: image.likes + 1
+      }).run(conn)
+
+      let created = yield r.db(db).table('images').get(imageId).run(conn)
+      return Promise.resolve(created)
+    })
+
+    return Promise.resolve(tasks()).asCallback(callback)
+  }
 }
 
 module.exports = Db
