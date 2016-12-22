@@ -45,6 +45,7 @@ class Db {
       }
       if (dbTables.indexOf('users') === -1) {
         yield r.db(db).tableCreate('users').run(conn)
+        yield r.db(db).table('users').indexCreate('username').run(conn)
       }
 
       return conn
@@ -183,6 +184,30 @@ class Db {
       let created = yield r.db(db).table('users').get(user.id).run(conn)
 
       return Promise.resolve(created)
+    })
+
+    return Promise.resolve(tasks()).asCallback(callback)
+  }
+
+  getUser (username, callback) {
+    if (!this.connected) {
+      return Promise.reject(new Error('not connected')).Callback(callback)
+    }
+
+    let connection = this.connection
+    let db = this.db
+
+    let tasks = co.wrap(function * () {
+      let conn = yield connection
+
+      yield r.db(db).table('users').indexWait().run(conn)
+      let users = yield r.db(db).table('users').getAll(username, {
+        index: 'username'
+      }).run(conn)
+
+      let result = yield users.next()
+
+      return Promise.resolve(result)
     })
 
     return Promise.resolve(tasks()).asCallback(callback)
