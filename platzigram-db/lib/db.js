@@ -42,6 +42,7 @@ class Db {
       if (dbTables.indexOf('images') === -1) {
         yield r.db(db).tableCreate('images').run(conn)
         yield r.db(db).table('images').indexCreate('createdAt').run(conn)
+        yield r.db(db).table('images').indexCreate('userId', { multi: true }).run(conn)
       }
       if (dbTables.indexOf('users') === -1) {
         yield r.db(db).tableCreate('users').run(conn)
@@ -86,7 +87,7 @@ class Db {
       image.id = result.generated_keys[0]
 
       yield r.db(db).table('images').get(image.id).update({
-        public_id: uuid.encode(image.id)
+        publicId: uuid.encode(image.id)
       }).run(conn)
 
       let created = yield r.db(db).table('images').get(image.id).run(conn)
@@ -246,5 +247,29 @@ class Db {
     })
     return Promise.resolve(tasks()).asCallback(callback)
   }
+  getImagesByUser (userId, password, callback) {
+    if (!this.connected) {
+      return Promise.reject(new Error('not connected')).Callback(callback)
+    }
+
+    let connection = this.connection
+    let db = this.db
+
+    let tasks = co.wrap(function * () {
+      let conn = yield connection
+
+      yield r.db(db).table('images').indexWait().run(conn)
+      let images = yield r.db(db).table('images').getAll(userId, {
+        index: 'userId'
+      }).orderBy(r.desc('createdAt')).run(conn)
+
+      let result = yield images.toArray()
+
+      return Promise.resolve(result)
+    })
+
+    return Promise.resolve(tasks()).asCallback(callback)
+  }
+
 }
 module.exports = Db
