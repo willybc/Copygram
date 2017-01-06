@@ -162,3 +162,27 @@ test('list images by users', async t => {
   let result = await db.getImagesByUser(userId)
   t.is(result.length, random)
 })
+
+test('list images by tag', async t => {
+  let db = t.context.db
+
+  t.is(typeof db.getImagesByTag, 'function', 'get ImagesByTag is a function')
+
+  let images = fixtures.getImages(10)
+  let tag = '#filterit'
+  let random = Math.round(Math.random() * images.length)
+
+  let saveImages = []
+  for (let i = 0; i < images.length; i++) {
+    if (i < random) {
+      images[i].description = tag
+    }
+
+    saveImages.push(db.saveImage(images[i]))
+  }
+
+  await Promise.all(saveImages)
+
+  let result = await db.getImagesByTag(tag)
+  t.is(result.length, random)
+})
