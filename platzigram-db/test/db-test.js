@@ -14,7 +14,7 @@ const fixtures = require('./fixtures')
 
 test.beforeEach('setup database', async t => {
   const dbName = `platzigram_${uuid.v4()}`
-  const db = new Db({ db: dbName })
+  const db = new Db({ db: dbName, setup: true })
   await db.connect()
   t.context.db = db
   t.context.dbName = dbName

@@ -18,6 +18,7 @@ class Db {
     this.host = options.host || defaults.host
     this.port = options.port || defaults.port
     this.db = options.db || defaults.db
+    this.setup = options.setup || false
   }
 
   connect (callback) {
@@ -30,6 +31,10 @@ class Db {
 
     let db = this.db
     let connection = this.connection
+
+    if (!this.setup) {
+      return Promise.resolve(connection).asCallback(callback)
+    }
 
     let setup = co.wrap(function * () {
       let conn = yield connection
