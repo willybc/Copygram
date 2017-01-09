@@ -4,11 +4,17 @@ var ext = require('file-extension');
 var aws = require('aws-sdk')
 var multerS3 = require('multer-s3')
 
-var config = require('./config')
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var expressSession = require('express-session');
+var passport = require('passport');
+
+var config = require('./config');
+var port = process.env.PORT || 3000;
 
 var s3 = new aws.S3({
   accessKeyId: config.aws.accessKey,
-  secretAccessKey: config.aws.secretKey  
+  secretAccessKey: config.aws.secretKey
 })
 
 var storage = multerS3({
@@ -26,6 +32,17 @@ var storage = multerS3({
 var upload = multer({ storage: storage }).single('picture');
 
 var app = express();
+
+app.set(bodyParser.json())
+app.use(bodyParser.urlencoded( { extended: false }));
+app.use(cookieParser());
+app.use(expressSession({
+  secret: config.secret,
+  resave: false,
+  saveUnitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('view engine', 'pug');
 
@@ -68,7 +85,7 @@ app.get('/api/pictures', function (req, res, next) {
   ];
 
   setTimeout(function () {
-    res.send(pictures);  
+    res.send(pictures);
   }, 2000)
 });
 
@@ -102,7 +119,7 @@ app.get('/api/user/:username', (req, res) => {
         src: 'https://instagram.fgig1-2.fna.fbcdn.net/t51.2885-15/e15/11356649_877030755705789_573658507_n.jpg?ig_cache_key=MTA3MDU4NDE3MzExNDU3MTEyMA%3D%3D.2',
         likes: 1
       },
-    
+
     ]
   }
 
