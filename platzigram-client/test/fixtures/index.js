@@ -4,7 +4,7 @@ const uuid = require('uuid-base62')
 
 const fixtures = {
   getImage () {
-    let id = uuid.uiid()
+    let id = uuid.uuid()
     return {
       descripption: 'an #awesome picture with #tags #platzi',
       tags: [ 'awesome', 'tags', 'platzi' ],
