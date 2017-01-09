@@ -24,19 +24,80 @@ class Client {
     return Promise.resolve(request(opts)).asCallback(callback)
   }
 
-  savePicture () {}
+  savePicture (picture, token, callback) {
+    let opts = {
+      method: 'POST',
+      url: `${this.options.endpoints.pictures}/`,
+      body: picture,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      json: true
+    }
 
-  likePicture () {}
+    return Promise.resolve(request(opts)).asCallback(callback)
+  }
 
-  listPictures () {}
+  likePicture (id, callback) {
+    let opts = {
+      method: 'POST',
+      url: `${this.options.endpoints.pictures}/${id}/like`,
+      json: true
+    }
 
-  listPicturesByTag () {}
+    return Promise.resolve(request(opts)).asCallback(callback)
+  }
 
-  saveUser () {}
+  listPictures (callback) {
+    let opts = {
+      method: 'GET',
+      url: `${this.options.endpoints.pictures}/list`,
+      json: true
+    }
 
-  getUser () {}
+    return Promise.resolve(request(opts)).asCallback(callback)
+  }
 
-  auth () {}
+  listPicturesByTag (tag, callback) {
+    let opts = {
+      method: 'GET',
+      url: `${this.options.endpoints.pictures}/tag/${tag}`,
+      json: true
+    }
+
+    return Promise.resolve(request(opts)).asCallback(callback)
+  }
+  saveUser (user, callback) {
+    let opts = {
+      method: 'POST',
+      url: `${this.options.endpoints.users}/`,
+      body: user,
+      json: true
+    }
+    return Promise.resolve(request(opts)).asCallback(callback)
+  }
+
+  getUser (username, callback) {
+    let opts = {
+      method: 'GET',
+      url: `${this.options.endpoints.users}/${username}`,
+      json: true
+    }
+    return Promise.resolve(request(opts)).asCallback(callback)
+  }
+
+  auth (username, password, callback) {
+    let opts = {
+      method: 'POST',
+      url: `${this.options.endpoints.auth}/`,
+      body: {
+        username,
+        password
+      },
+      json: true
+    }
+    return Promise.resolve(request(opts)).asCallback(callback)
+  }
 }
 
 module.exports = Client
