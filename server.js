@@ -8,9 +8,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressSession = require('express-session');
 var passport = require('passport');
-
+var platzigram = require('plaztigram-client');
 var config = require('./config');
 var port = process.env.PORT || 3000;
+
+var client = platzigram.createClient(config.client);
 
 var s3 = new aws.S3({
   accessKeyId: config.aws.accessKey,
@@ -55,6 +57,16 @@ app.get('/', function (req, res) {
 app.get('/signup', function (req, res) {
   res.render('index', { title: 'Platzigram - Signup' });
 })
+
+app.post('/signup', function (req, res) {
+  var use = req.body;
+  client.saveUser(user, function (err, usr) {
+    if (err) return res.status(500).send(err.message);
+
+    res.redirect('/signin');
+
+  })
+});
 
 app.get('/signin', function (req, res) {
   res.render('index', { title: 'Platzigram - Signin' });
